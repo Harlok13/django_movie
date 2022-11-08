@@ -86,3 +86,26 @@ class MovieShots(models.Model):
         verbose_name = 'Кадр из фильма'
         verbose_name_plural = 'Кадры из фильмов'
 
+
+class RatingStar(models.Model):
+    """Звезда рейтинга"""
+    value = models.PositiveSmallIntegerField('Значение', default=0)
+
+    def __str__(self):
+        return self.value
+
+    class Meta:
+        verbose_name = 'Звезда рейтинга'
+        verbose_name_plural = 'Звезды рейтинга'
+
+
+class Rating(models.Model):
+    ip = models.CharField('IP адрес', max_length=15)
+    star = models.ForeignKey(RatingStar, verbose_name='Звезда', on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, verbose_name='Фильм', on_delete=models.CharField)
+
+    def __str__(self):
+        return f'{self.star} - {self.movie}'
+
+
+
